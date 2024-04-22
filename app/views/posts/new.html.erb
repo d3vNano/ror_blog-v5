@@ -1,0 +1,23 @@
+<h1>Crie seu post</h1>
+
+<%= form_with(model: @post, local: true) do |form| %>
+    <div class="field">
+       <%= form.label :title %>
+       <%= form.text_field :title, id: :post_title %>
+    </div>
+   
+    <div class="field">
+       <%= form.label :content %>
+       <%= form.text_area :content, id: :post_content %>
+    </div>
+   
+    <div class="actions">
+       <%= form.submit %>
+    </div>
+   #  <% flash.each do |name, msg| %>
+   #    <div class="alert alert-<%= name %>">
+   #       <%= msg %>
+   #    </div>
+   #   <% end %>
+   <% end %>
+   

@@ -1,0 +1,16 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+
+<%= link_to 'Edit', edit_post_path(@post) %>
+<%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<h2>Comments</h2>
+<div id="comments">
+ <% @comments.each do |comment| %>
+    <p><strong><%= comment.user.name if comment.user %></strong>: <%= comment.content %></p>
+ <% end %>
+</div>
+
+<%= will_paginate @comments %>
+
+<%= render 'comments/form', post: @post %>

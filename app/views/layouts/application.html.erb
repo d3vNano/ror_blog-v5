@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RorBlogV5</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header>
+      <% if user_signed_in? %>
+        <div class="user-info">
+          <%= current_user.name %>
+          <span>
+          <% if params[:editing] == 'true' %>
+             <%= link_to 'Voltar', root_path, class: 'edit-link' %>
+          <% else %>
+             <%= link_to 'Editar', edit_user_registration_path(current_user, editing: true), class: 'edit-link' %>
+          <% end %>
+         </span>         
+         
+        </div>
+      <% end %>
+    </header>
+    <%= yield %>
+</body>
+
+</html>

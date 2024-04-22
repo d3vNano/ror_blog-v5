@@ -1,0 +1,44 @@
+
+<h1>Posts</h1>
+
+<% if user_signed_in? %>
+ <%= link_to 'New Post', new_post_path, class: 'btn btn-primary' %>
+ <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-secondary' %>
+<% else %>
+ <%= link_to 'Register', new_user_registration_path, class: 'btn btn-primary' %>
+ <%= link_to 'Login', new_user_session_path, class: 'btn btn-secondary' %>
+<% end %>
+
+<% if @posts.empty? %>
+ <p>Ainda não há posts aqui.</p>
+<% else %>
+ <%= will_paginate @posts %>
+
+ <% @posts.each do |post| %>
+    <div>
+      <h2><%= link_to post.title, post %></h2>
+      <p><%= post.content %></p>
+      <% if user_signed_in? %>
+      <%= link_to 'Editar', edit_post_path(post) %>
+      <%= button_to 'Deletar', post_path(post), method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+
+      <!-- Adicionando a sessão de comentários para cada post -->
+      <h3>Comments</h3>
+      <div id="comments">
+      <% post.comments.order(created_at: :desc).limit(4).each do |comment| %>
+        <p><strong><%= comment.user_id.nil? ? 'Anônimo' : comment.user.name %></strong>: <%= comment.content %></p>
+       <% end %>
+       
+      </div>
+
+
+      <!-- Formulário para adicionar novos comentários -->
+      <%= render 'comments/form', post: post %>
+      
+    </div>
+ <% end %>
+
+ <%= will_paginate @posts %>
+<% end %>
+
