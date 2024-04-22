@@ -45,9 +45,13 @@ class PostsController < ApplicationController
  def destroy
     @post = Post.find(params[:id])
     unless @post.user == current_user
-      redirect_to posts_path, alert: "Você não tem permissão para excluir este post."
-    end
+        redirect_to posts_path, alert: "Você não tem permissão para excluir este post."
+    else
+    @post.destroy
+    redirect_to posts_path, notice: 'Post was successfully destroyed.'
  end
+end
+
 
  private
 
