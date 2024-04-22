@@ -11,21 +11,7 @@
   </head>
 
   <body>
-    <header>
-      <% if user_signed_in? %>
-        <div class="user-info">
-          <%= current_user.name %>
-          <span>
-          <% if params[:editing] == 'true' %>
-             <%= link_to 'Voltar', root_path, class: 'edit-link' %>
-          <% else %>
-             <%= link_to 'Editar', edit_user_registration_path(current_user, editing: true), class: 'edit-link' %>
-          <% end %>
-         </span>         
-         
-        </div>
-      <% end %>
-    </header>
+
     <%= yield %>
 </body>
 

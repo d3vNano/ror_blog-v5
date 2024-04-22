@@ -1,12 +1,14 @@
 <%= form_with(model: [ post, post.comments.build ], local: true) do |form| %>
    <div class="field">
-       <%= form.label :content %>
+       <%= form.label :Digite_seu_comentário %>
+       <div>
        <%= form.text_area :content %>
+       </div>
    </div>
 
    <%= form.hidden_field :anonymous, value: !user_signed_in? %>
 
    <div class="actions">
-       <%= form.submit %>
+       <%= form.submit "Comentar" %>
    </div>
 <% end %>

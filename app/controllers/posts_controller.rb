@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
  def index
    @posts = Post.includes(:comments).all.paginate(page: params[:page], per_page: 10)
+   @posts = Post.order(created_at: :desc).paginate(page: params[:page], per_page: 3)
 end
 
  def show
