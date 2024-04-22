@@ -37,7 +37,7 @@
     <div>
       <h2><%= post.title%></h2>
       <p><%= post.content %></p>
-      <% if user_signed_in? %>
+      <% if user_signed_in? && post.user == current_user %>
       <%= button_to link_to 'Editar', edit_post_path(post) %>
       <%= button_to 'Deletar', post_path(post), method: :delete, data: { confirm: 'Are you sure?' } %>
       <% end %>

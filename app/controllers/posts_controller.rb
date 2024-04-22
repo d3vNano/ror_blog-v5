@@ -1,13 +1,10 @@
 class PostsController < ApplicationController
  before_action :authenticate_user!, except: [:index, :show]
- before_action :set_post, only: [:show, :edit, :update, :destroy]
+ before_action :set_post, only: [:edit, :update, :destroy]
 
  def index
    @posts = Post.includes(:comments).all.paginate(page: params[:page], per_page: 10)
    @posts = Post.order(created_at: :desc).paginate(page: params[:page], per_page: 3)
-end
-
- def show
  end
 
  def new
@@ -15,8 +12,10 @@ end
  end
 
  def edit
-   @post = Post.find(params[:id])
-
+    @post = Post.find(params[:id])
+    unless @post.user == current_user
+      redirect_to posts_path, alert: "Você não tem permissão"
+    end
  end
 
  def create
@@ -45,8 +44,9 @@ end
 
  def destroy
     @post = Post.find(params[:id])
-    @post.destroy
-    redirect_to posts_path, notice: 'Post was successfully destroyed.'
+    unless @post.user == current_user
+      redirect_to posts_path, alert: "Você não tem permissão para excluir este post."
+    end
  end
 
  private
